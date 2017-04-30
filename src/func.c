@@ -4,7 +4,11 @@
 #include <string.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <sys/time.h>
 #include "func.h"
+
+char *Words[MAX_VERBS];	//Массив содержаший слова
+int Mas[QUAN_VERBS];
 
 int read_file(const char *in_file_name){
 	FILE *in_file;
@@ -12,11 +16,10 @@ int read_file(const char *in_file_name){
 	register int inWord = 0;
 	int c;
 	int WLen = 0;
-	char *Words[MAX_VERBS];	//Массив содержаший слова
 	char word[100]= {' '}; 
 	if((in_file = fopen(in_file_name, "r")) == NULL)
 		return -1;
-		//printf("\tОшибка чтения файла\n");
+		//printf("Ошибка чтения файла");
 	//printf("\tЧтение файла %s\n", in_file_name);
 
 	 while((c = getc(in_file)) != EOF)
@@ -45,36 +48,55 @@ int read_file(const char *in_file_name){
 			}
 		}
 	}
-
-	//test_verbs(*Words);
-	printf("\tДобро пожаловать!\n\tТестирование неправельных глаголов английского языка\n\tВерсия: 1.0\n\tРазработчики: Бубнов, Лейка, Вараксина\n");
-	printf("\n\tПо какой форме глаголов вы бы хотели протестироватся?\n\t");
-	
-	int form;
-	scanf("%d", &form);
-		if(form == 1){
-			printf("\n\t1\n");
-		}else
-		if(form == 2){
-			printf("\n\t2\n");
-		}else
-		if(form == 3){
-			printf("\n\t3\n");
-		}else{
-			printf("\n\tНеобходимо вводить цифру от 1 до 3!\n");
-			return 1;
-		}
-
-	for(int i = 0; i < MAX_VERBS; i++){
-		//printf("%s\n", Words[i]);
-		free(Words[i]);
-	}
-	free(*Words);
-   	fclose(in_file);
+	fclose(in_file);
 	return 0;
 }
 
-// void test_verbs(char Words[MAX_VERBS]){
+int test_verbs(int formverbs){ //Фукция тестирования
+	getrand(100); //Создать рандомный массив
+	int i = 0, trueanswer = 0, verbprint = 1;
+	char word[100]; 
+	if((formverbs == 1) || (formverbs == 2) || (formverbs == 3)){
+		if(formverbs == 1) verbprint = 3;
+		printf("\n\tВведите глагол %d-й формы, если глаголы представленны в %d-й форме:\n", formverbs, verbprint);	
+		for( ;i<QUAN_VERBS; i++){	
+			printf("\n\t%d) %s: ", i+1, Words[4*Mas[i]+verbprint-1]);
+			scanf("%s", word);
+			if(strcmp(word, Words[4*Mas[i]+formverbs-1]) == 0){
+				printf("\n\t%sверно%s\n", clBoldGreen, clNormal);
+				trueanswer++;
+			}else printf("\n\t%sне верно%s (%s)\n", clBoldRed, clNormal, Words[4*Mas[i]+formverbs-1]);
+		}
+		//Вывод результата
+	 	printf("\n\tВы верно ответили %d раз(а)\n\t", trueanswer);
+	 	if(trueanswer>=18){
+			printf("%sОтлично%s\n\n", clBoldGreen, clNormal);
+	 	}else if(trueanswer>=15){
+			printf("%sХорошо%s\n\n", clBoldGreen, clNormal);
+	 	}else if(trueanswer>=10){
+			printf("%sУдовлетворительно%s\n\n", clBoldGreen, clNormal);
+		}else printf("%sНе удовлетворительно%s\n\n", clBoldRed, clNormal);
 
-	
-// }
+	}else{
+		printf("\n\tНеобходимо вводить цифру от 1 до 3!\n");
+		return 1;
+	}
+
+	//Очистить выделенную память
+	for(int i = 0; i < MAX_VERBS; i++){
+		free(Words[i]);
+	}
+	free(*Words);
+
+	return 0;
+}
+
+int getrand(int r) //Рандом
+{
+	srand(time(0));
+	for(int i=0; i<QUAN_VERBS; i++){ 
+		Mas[i] = rand() / (RAND_MAX + 1.0) * r;
+		printf("%d ", Mas[i]);
+	}
+	return 0;
+}
