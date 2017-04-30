@@ -96,7 +96,7 @@ int getrand(int r) //Рандом
 	srand(time(0));
 	for(int i=0; i<QUAN_VERBS; i++){ 
 		Mas[i] = rand() / (RAND_MAX + 1.0) * r;
-		printf("%d ", Mas[i]);
+		//printf("%d ", Mas[i]);
 	}
 	return 0;
 }
