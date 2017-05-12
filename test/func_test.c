@@ -53,3 +53,27 @@ CTEST(test_result_two, test_printf)
     const int expected = 2;
     ASSERT_EQUAL(expected, result);
 }
+CTEST(test_result_min0, test_printf)
+{
+   
+    const int t = -1;
+
+  
+    const int result = result_print(t);
+
+  
+    const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}
+CTEST(test_result_max0, test_printf)
+{
+   
+    const int t = 250;
+
+  
+    const int result = result_print(t);
+
+  
+    const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}

@@ -85,8 +85,9 @@ int getrand(int r) //Рандом
 }
 
 int result_print(int trueanswer){	//Вывод результата
- 	printf("\n\tВы верно ответили %d раз(а)\n\t", trueanswer);
- 	if(trueanswer>=18){
+  if ((trueanswer>=0)&&(trueanswer<=20)){	
+         printf("\n\tВы верно ответили %d раз(а)\n\t", trueanswer);
+ 	if((trueanswer>=18)&&(trueanswer<=20)){
 		printf("%sОтлично%s\n\n", clBoldGreen, clNormal);
 		return 5;
  	}else if(trueanswer>=15){
@@ -95,10 +96,13 @@ int result_print(int trueanswer){	//Вывод результата
  	}else if(trueanswer>=10){
 		printf("%sУдовлетворительно%s\n\n", clBoldGreen, clNormal);
 		return 3;
-	}else{
+	}else if((trueanswer>=0)&&(trueanswer<=9)){
 		printf("%sНе удовлетворительно%s\n\n", clBoldRed, clNormal);
 		return 2;
 	}
+    
+  }else printf("Неверный диапазон.\n"); 
+	return 0;
 }
 
 int compar_verbs(int formverbs){	//Сравнение строк
