@@ -68,12 +68,35 @@ CTEST(test_result_min0, test_printf)
 CTEST(test_result_max0, test_printf)
 {
    
-    const int t = 250;
+    const int t = 21;
 
   
     const int result = result_print(t);
 
   
     const int expected = 0;
+    ASSERT_EQUAL(expected, result);
+}
+CTEST(test_verbsform_less1, test_verbsform)
+{
+   
+    const int t =0;
+
+  
+    const int result = test_verbs(t);
+
+  
+    const int expected = -1;
+    ASSERT_EQUAL(expected, result);
+}CTEST(test_verbsform_more3, test_verbsform)
+{
+   
+    const int t = 4;
+
+  
+    const int result = test_verbs(t);
+
+  
+    const int expected = -1;
     ASSERT_EQUAL(expected, result);
 }
