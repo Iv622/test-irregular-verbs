@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <time.h>
 #include <inttypes.h>
-#include <sys/time.h>
 #include "func.h"
 
 char *Words[MAX_VERBS];	//Массив содержаший слова
@@ -54,32 +54,17 @@ int read_file(const char *in_file_name){
 
 int test_verbs(int formverbs){ //Фукция тестирования
 	getrand(100); //Создать рандомный массив
-	int i = 0, trueanswer = 0, verbprint = 1;
-	char word[100]; 
 	if((formverbs == 1) || (formverbs == 2) || (formverbs == 3)){
-		if(formverbs == 1) verbprint = 3;
-		printf("\n\tВведите глагол %d-й формы, если глаголы представленны в %d-й форме:\n", formverbs, verbprint);	
-		for( ;i<QUAN_VERBS; i++){	
-			printf("\n\t%d) %s: ", i+1, Words[4*Mas[i]+verbprint-1]);
-			scanf("%s", word);
-			if(strcmp(word, Words[4*Mas[i]+formverbs-1]) == 0){
-				printf("\n\t%sверно%s\n", clBoldGreen, clNormal);
-				trueanswer++;
-			}else printf("\n\t%sне верно%s (%s)\n", clBoldRed, clNormal, Words[4*Mas[i]+formverbs-1]);
-		}
-		//Вывод результата
-	 	printf("\n\tВы верно ответили %d раз(а)\n\t", trueanswer);
-	 	if(trueanswer>=18){
-			printf("%sОтлично%s\n\n", clBoldGreen, clNormal);
-	 	}else if(trueanswer>=15){
-			printf("%sХорошо%s\n\n", clBoldGreen, clNormal);
-	 	}else if(trueanswer>=10){
-			printf("%sУдовлетворительно%s\n\n", clBoldGreen, clNormal);
-		}else printf("%sНе удовлетворительно%s\n\n", clBoldRed, clNormal);
-
+		//Сравнение слов и вывод результата
+		result_print(compar_verbs(formverbs));
 	}else{
 		printf("\n\tНеобходимо вводить цифру от 1 до 3!\n");
-		return 1;
+		//Очистить выделенную память
+		for(int i = 0; i < MAX_VERBS; i++){
+			free(Words[i]);
+		}
+		free(*Words);
+		return -1;
 	}
 
 	//Очистить выделенную память
@@ -87,16 +72,51 @@ int test_verbs(int formverbs){ //Фукция тестирования
 		free(Words[i]);
 	}
 	free(*Words);
-
 	return 0;
 }
 
 int getrand(int r) //Рандом
 {
-	srand(time(0));
+	srand(time(NULL));
 	for(int i=0; i<QUAN_VERBS; i++){ 
 		Mas[i] = rand() / (RAND_MAX + 1.0) * r;
-		//printf("%d ", Mas[i]);
 	}
 	return 0;
+}
+
+int result_print(int trueanswer){	//Вывод результата
+  if ((trueanswer>=0)&&(trueanswer<=20)){	
+         printf("\n\tВы верно ответили %d раз(а)\n\t", trueanswer);
+ 	if((trueanswer>=18)&&(trueanswer<=20)){
+		printf("%sОтлично%s\n\n", clBoldGreen, clNormal);
+		return 5;
+ 	}else if(trueanswer>=15){
+		printf("%sХорошо%s\n\n", clBoldGreen, clNormal);
+		return 4;
+ 	}else if(trueanswer>=10){
+		printf("%sУдовлетворительно%s\n\n", clBoldGreen, clNormal);
+		return 3;
+	}else if((trueanswer>=0)&&(trueanswer<=9)){
+		printf("%sНе удовлетворительно%s\n\n", clBoldRed, clNormal);
+		return 2;
+	}
+    
+  }else printf("Неверный диапазон.\n"); 
+	return 0;
+}
+
+int compar_verbs(int formverbs){	//Сравнение строк
+	int trueanswer = 0, verbprint = 1, j = 0;
+	char word[100]; 
+	if(formverbs == 1) verbprint = 3;
+	printf("\n\tВведите глагол %d-й формы, если глаголы представленны в %d-й форме:\n", formverbs, verbprint);	
+	for( ;j<QUAN_VERBS; j++){	
+		printf("\n\t%d) %s: ", j+1, Words[4*Mas[j]+verbprint-1]);
+		scanf("%s", word);
+		if(strcmp(word, Words[4*Mas[j]+formverbs-1]) == 0){
+			printf("\n\t%sверно%s\n", clBoldGreen, clNormal);
+			trueanswer++;
+		}else printf("\n\t%sне верно%s (%s)\n", clBoldRed, clNormal, Words[4*Mas[j]+formverbs-1]);
+	}
+	return trueanswer;
 }

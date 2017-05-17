@@ -15,4 +15,8 @@ int test_verbs(int formverbs);
 
 int getrand(int r);
 
+int result_print(int trueanswer);	//Вывод результата
+
+int compar_verbs(int formverbs);	//Сравнение строк
+
 #endif
