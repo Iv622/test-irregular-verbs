@@ -84,13 +84,16 @@ int test_verbs(int formverbs)//Фукция тестирования
 }
 
 int getrand(int r) //Рандом
-{
+	{
 	srand(time(NULL));
-	for(int i=0; i<QUAN_VERBS; i++)
-	{ 
-		Mas[i] = rand() / (RAND_MAX + 1.0) * r;
+	int i, j;
+	for(i = 0; i<QUAN_VERBS; i++){
+	Mas[i] = rand() % r ;
+	for(j = 0; j < i; j++)
+	if(Mas[i] == Mas[j])
+	i--;
 	}
-	return 0;
+return 0;
 }
 
 /*int result_print(int trueanswer){	//Вывод результата
