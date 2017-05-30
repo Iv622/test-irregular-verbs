@@ -19,4 +19,5 @@ int result_print(int trueanswer);	//Вывод результата
 
 int compar_verbs(int formverbs);	//Сравнение строк
 
+void print_res(int res, int trueanswer);
 #endif
