@@ -22,9 +22,9 @@ int read_file(const char *in_file_name)\
 		return -1;
 //printf("Ошибка чтения файла");
 //printf("\tЧтение файла %s\n", in_file_name);
-	 
-	 while((c = getc(in_file)) != EOF)
-	 {
+
+	while((c = getc(in_file)) != EOF)
+	{
 		if((c == '\t') || (c == '\n'))
 		{
 			inWord = 0;
@@ -54,12 +54,12 @@ int read_file(const char *in_file_name)\
 }
 
 int test_verbs(int formverbs)//Фукция тестирования
-{ 
+{
 	getrand(100); //Создать рандомный массив
 	if((formverbs == 1) || (formverbs == 2) || (formverbs == 3))
 	{
 		//Сравнение слов и вывод результата
-		int i=compar_verbs(formverbs);/////////////////////////////////////////переиминуй переменную по русски
+		int i=compar_verbs(formverbs);
 		print_res(result_print(i),i);
 	}
 	else
@@ -83,15 +83,16 @@ int test_verbs(int formverbs)//Фукция тестирования
 	return 0;
 }
 
-int getrand(int r) //Рандом
+int getrand(int r) //Рандом.........................................
 	{
 	srand(time(NULL));
 	int i, j;
-	for(i = 0; i<QUAN_VERBS; i++){
-	Mas[i] = rand() % r ;
-	for(j = 0; j < i; j++)
-	if(Mas[i] == Mas[j])
-	i--;
+	for(i = 0; i<QUAN_VERBS; i++)
+	{
+		Mas[i] = rand() % r ;
+		for(j = 0; j < i; j++)
+		if(Mas[i] == Mas[j])
+		i--;
 	}
 return 0;
 }
@@ -123,18 +124,17 @@ int result_print(int trueanswer)
 {
 	int res;
 	if ((trueanswer>=0)&&(trueanswer<=20))
-	{	
-        
- 		if((trueanswer>=18)&&(trueanswer<=20))
- 		{
+	{
+		if((trueanswer>=18)&&(trueanswer<=20))
+		{
 			res=5;
 			return res;
- 		}
- 		else if(trueanswer>=15)
- 		{
+		}
+		else if(trueanswer>=15)
+		{
 			res=4;
 			return res;
- 		}
+		}
 		else if(trueanswer>=10)
 		{
 			res=3;
@@ -188,13 +188,13 @@ int compar_verbs(int formverbs)//Сравнение строк
 	{	
 		printf("\n\t%d) %s: ", j+1, Words[4*Mas[j]+verbprint-1]);
 		scanf("%s", word);
-		while (word[i]) // пока не конец строки
+		while (word[i]) // пока не конец строки........................
 	{
 		character = word[i];
 	word[i] = (char)tolower(character); // преобразовать текущий символ строки в строчный
 	i++; // инкремент индекса символов в строке
 		}
-			i=0;
+			i=0;//....................................
 		if(strcmp(word, Words[4*Mas[j]+formverbs-1]) == 0)
 		{
 			printf("\n\t%sверно%s\n", clBoldGreen, clNormal);
