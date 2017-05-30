@@ -53,7 +53,7 @@ CTEST(test_verbsform_less1, test_verbsform)
 {
 	const int tested_value =0;
 	const int result = test_verbs(tested_value);
-	const int expected_result= 0;
+	const int expected_result= -1;
 	ASSERT_EQUAL(expected_result, result);
 }
 
@@ -61,6 +61,6 @@ CTEST(test_verbsform_more3, test_verbsform)
 {
 	const int tested_value = 4;
 	const int result = test_verbs(tested_value);
-	const int expected_result = 0;
+	const int expected_result = -1;
 	ASSERT_EQUAL(expected_result, result);
 }
