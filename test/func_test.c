@@ -4,7 +4,7 @@
 CTEST(test_result_five, test_printf)
 {
 	const int tested_value = 19;
-	сonst int result = result_print(tested_value);
+	const int result = result_print(tested_value);
 	const int expected_result= 5;
 	ASSERT_EQUAL(expected_result, result);
 }
